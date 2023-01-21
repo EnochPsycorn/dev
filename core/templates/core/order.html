@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+
+{% load cart %}
+
+{% block content %}
+
+
+<div class="container text-white p-4">
+    <p class="display-4">Your Orders</p>
+    <hr style="background: white;">
+    <table class="table">
+        <thead>
+        <tr class="bg-primary">
+            <th>S.N</th>
+            <th>Image</th>
+            <th>Product</th>
+            <th>Date</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for i in order %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td><img class="rounded-circle" height="60px" src="{{i.product.image.url}}"></td>
+            <td>{{i.product.name}}</td>
+            <td>{{i.price|currency}}</td>
+            <td>{{i.date}}</td>
+            <td>{{i.quantity}}</td>
+            <td>{{i.quantity|multiply:i.price|currency}}</td>
+            {% if i.status %}
+            <td class="text-success">Completed</td>
+            {% else %}
+            <td class="text-warning">Pending</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+{% endblock %}
